@@ -21,7 +21,7 @@ public class DataService {
 
         boolean isHit = checkHit(request);
 
-        long executionTime = (System.nanoTime() - startTime) / 1_000_000;
+
         String currentTime = LocalTime.now().format(DTF);
 
         Response response = new Response(
@@ -30,7 +30,7 @@ public class DataService {
                 request.r(),
                 isHit,
                 currentTime,
-                executionTime
+                System.nanoTime()-startTime
         );
 
         historyManager.addResult(response);

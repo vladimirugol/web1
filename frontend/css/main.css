@@ -23,7 +23,7 @@
 }
 
 .graph-container, .results-container, .data-form {
-    background-color: #ffffff; /* Белый фон для "карточек" */
+    background-color: #ffffff; 
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -39,7 +39,6 @@
     border: 1px solid #ccc;
 }
 
-/* --- Стили для таблицы результатов --- */
 .results-container h2 {
     margin-top: 0;
     text-align: center;
@@ -51,7 +50,6 @@
     border-collapse: collapse; 
 }
 
-/* Селектор потомков: стилизуем ячейки внутри таблицы */
 #results-table th, #results-table td {
     border: 1px solid #ddd;
     padding: 8px 10px;
@@ -60,7 +58,7 @@
 }
 
 #results-table th {
-    background-color: white; /* Темно-синий для заголовков */
+    background-color: white; 
     color: black;
     font-weight: bold;
 }

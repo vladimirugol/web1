@@ -15,10 +15,10 @@ FROM openjdk:21
 
 WORKDIR /app
 
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /app/build/libs/*.jar backend-1.0-SNAPSHOT.jar
 COPY --from=build /app/libs ./libs
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-cp", "app.jar:libs/*", "org.example.Main"]
+ENTRYPOINT ["java", "-jar", "-DFCGI_PORT=8080", "backend-1.0-SNAPSHOT.jar"]
 

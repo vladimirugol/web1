@@ -13,16 +13,13 @@ public final class FCGIUtil {
         FCGIInterface.request.inStream.fill();
         int contentLength = FCGIInterface.request.inStream.available();
         if (contentLength <= 0) {
-            return null;
+            return "";
         }
-
         ByteBuffer buffer = ByteBuffer.allocate(contentLength);
         int readBytes = FCGIInterface.request.inStream.read(buffer.array(), 0, contentLength);
-
         byte[] requestBodyRaw = new byte[readBytes];
         buffer.get(requestBodyRaw);
         buffer.clear();
-
         return new String(requestBodyRaw, StandardCharsets.UTF_8);
     }
 }

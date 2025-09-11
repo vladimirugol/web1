@@ -23,7 +23,7 @@ const graphDrawer = {
     },
 
     drawCanvas(rValue) {
-        this.ctx.clearRect(0, 0, this.width, this.height); // Полная очистка
+        this.ctx.clearRect(0, 0, this.width, this.height); 
         this._drawArea(rValue);
         this._drawAxes();
         this._drawLabels(rValue);
@@ -33,9 +33,9 @@ const graphDrawer = {
     drawPoint(x, y, r, isHit) {
         const scale = this.R_PIXELS / r;
         const pointX = this.centerX + x * scale;
-        const pointY = this.centerY - y * scale; // Y инвертирован в canvas
+        const pointY = this.centerY - y * scale; 
 
-        this.ctx.fillStyle = isHit ? '#28a745' : '#dc3545'; // Зеленый или красный
+        this.ctx.fillStyle = isHit ? '#28a745' : '#dc3545'; 
         this.ctx.beginPath();
         this.ctx.arc(pointX, pointY, 4, 0, 2 * Math.PI);
         this.ctx.fill();
@@ -43,11 +43,27 @@ const graphDrawer = {
 
     redrawAllPoints(history) {
         history.forEach(item => {
-            const isHit = item.hit === "Попадание";
+            const isHit = item.hit;
             this.drawPoint(parseFloat(item.x), parseFloat(item.y), parseFloat(item.r), isHit);
         });
     },
 
+    drawPointsForCurrentR(history, currentR) {
+        if (!currentR) return;
+        
+        history.forEach(item => {
+            const isHit = item.hit;
+            // Конвертируем координаты для текущего R
+            const scale = this.R_PIXELS / currentR;
+            const pointX = this.centerX + parseFloat(item.x) * scale;
+            const pointY = this.centerY - parseFloat(item.y) * scale;
+
+            this.ctx.fillStyle = isHit ? '#28a745' : '#dc3545'; 
+            this.ctx.beginPath();
+            this.ctx.arc(pointX, pointY, 4, 0, 2 * Math.PI);
+            this.ctx.fill();
+        });
+    },
     
     _drawArea(rValue) {
         const r_px = this.R_PIXELS;
