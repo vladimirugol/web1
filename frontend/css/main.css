@@ -1,0 +1,148 @@
+
+.main-container {
+    width: 95%; 
+    height: max-content;
+    margin: 20px auto; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content-wrapper {
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 40px; 
+}
+
+.left-column, .right-column {
+    flex: 1; 
+    min-width: 320px; 
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+}
+
+.graph-container, .results-container, .data-form {
+    background-color: #ffffff; /* Белый фон для "карточек" */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.graph-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#graph-canvas {
+    border: 1px solid #ccc;
+}
+
+/* --- Стили для таблицы результатов --- */
+.results-container h2 {
+    margin-top: 0;
+    text-align: center;
+    color: black;
+}
+
+#results-table {
+    width: 100%;
+    border-collapse: collapse; 
+}
+
+/* Селектор потомков: стилизуем ячейки внутри таблицы */
+#results-table th, #results-table td {
+    border: 1px solid #ddd;
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+#results-table th {
+    background-color: white; /* Темно-синий для заголовков */
+    color: black;
+    font-weight: bold;
+}
+
+#results-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#data-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px; 
+}
+
+.form-group label, .form-group p {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: black;
+}
+
+.form-group input[type="text"] {
+    width: 95%; 
+    padding: 10px;
+    border: 3px solid #e50074;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input[type="text"]:focus {
+    border-color: #4a6a8a; 
+    outline: none;
+}
+
+.radio-buttons, .checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; 
+}
+.radio-buttons span,
+.checkboxes span {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 15px; 
+}
+.radio-buttons input,
+.checkboxes input {
+  vertical-align: middle; 
+  margin-top: -7px; 
+}
+
+#submit-button {
+
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    letter-spacing: 1px;
+    background-color: #ffffff;
+    border: 3px solid #e50074; 
+    color: #000000;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+#submit-button:hover {
+    background-color: #e50074;
+    border: 2px solid #e50074;
+    color: #fff;
+}
+
+#error-message {
+    color: red; 
+    font-weight: bold;
+    min-height: 20px; 
+    text-align: center;
+    margin-bottom: 20px ;
+}
+

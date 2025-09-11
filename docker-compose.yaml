@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend  
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: java-backend
+    restart: unless-stopped
+    environment:
+      - JAVA_OPTS=-Xmx512m
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend 
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    container_name: nginx-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
