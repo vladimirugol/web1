@@ -1,4 +1,4 @@
 package org.example.request;
 
-public record Request(double x, double y, double r) {
+public record Request(long x, long y, long r) {
 }

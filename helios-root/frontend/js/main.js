@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('r', r);
 
         try {
-            const response = await fetch('/api', {
+            const response = await fetch('/fcgi-bin/server.jar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             graphDrawer.redrawAllPoints(history);
         } catch (error) {
             console.error('Ошибка при отправке запроса:', error);
-            errorMessage.textContent = 'Произошла ошибка при связи с сервером.';
+            errorMessage.textContent = 'Connection Error.';
         }
     }
 

@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class HistoryManager {
     private final ConcurrentLinkedDeque<Response> resultsHistory = new ConcurrentLinkedDeque<>();
-
     public void addResult(Response response) {
         resultsHistory.addFirst(response);
     }

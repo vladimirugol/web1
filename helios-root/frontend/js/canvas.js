@@ -53,7 +53,6 @@ const graphDrawer = {
         
         history.forEach(item => {
             const isHit = item.hit;
-            // Конвертируем координаты для текущего R
             const scale = this.R_PIXELS / currentR;
             const pointX = this.centerX + parseFloat(item.x) * scale;
             const pointY = this.centerY - parseFloat(item.y) * scale;

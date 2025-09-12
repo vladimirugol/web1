@@ -17,9 +17,9 @@ public class RequestParser {
             }
         }
 
-        double x = Double.parseDouble(params.get("x"));
-        double y = Double.parseDouble(params.get("y"));
-        double r = Double.parseDouble(params.get("r"));
+        long x = Long.parseLong(params.get("x"));
+        long y = Long.parseLong(params.get("y"));
+        long r = Long.parseLong(params.get("r"));
 
         return new Request(x, y, r);
     }

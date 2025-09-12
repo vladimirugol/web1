@@ -1,4 +1,4 @@
 package org.example.response;
 
-public record Response(double x, double y, double r, boolean hit, String currentTime, long execMs) {
+public record Response(long x, long y, long r, boolean hit, String currentTime, long execMs) {
 }
