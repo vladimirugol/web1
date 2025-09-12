@@ -1,5 +1,6 @@
 package org.example.request;
 
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -17,9 +18,9 @@ public class RequestParser {
             }
         }
 
-        long x = Long.parseLong(params.get("x"));
-        long y = Long.parseLong(params.get("y"));
-        long r = Long.parseLong(params.get("r"));
+        BigDecimal x = new BigDecimal(params.get("x"));
+        BigDecimal y = new BigDecimal(params.get("y"));
+        BigDecimal r = new BigDecimal(params.get("r"));
 
         return new Request(x, y, r);
     }

@@ -139,27 +139,47 @@
   vertical-align: middle; 
   margin-top: -7px; 
 }
-
-#submit-button {
-
+.form-group-button {
+    box-sizing: border-box;
     width: 100%;
+    height: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: relative;
+    display: flex;
+    align-items: center;
+    top:10px;
+}
+#theme {
+    cursor: pointer;
+    margin:10px, 10px;
+    max-width: max-content;
+    padding: 12px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 16px;
+    border: 2px solid #e50074;
+}
+#submit-button {
+    left: 45%;
+    position: absolute;
+    width: 150px;
     box-sizing: border-box;
     padding: 12px;
     letter-spacing: 1px;
-    background-color: #ffffff;
-    border: 3px solid #e50074; 
-    color: #000000;
+    background-color: var(--btn-bc);
+    border: var(--btn-b); 
+    color: var(--btn-c);
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, top 0.5 linear, left 0.5 linear;
 }
 
 #submit-button:hover {
-    background-color: #e50074;
-    border: 2px solid #e50074;
-    color: #fff;
+    background-color: var(--btn-bch);
+    border: var(--btn-bh);
+    color: var(--btn-ch);
 }
 
 #error-message {
@@ -170,3 +190,44 @@
     margin-bottom: 20px;
 }
 
+.default {
+    --btn-b: 3px solid #e50074;
+    --btn-bc: white;
+    --btn-c: black;
+    --btn-bch: #e50074;
+    --btn-bh: 2px solid #e50074;
+    --btn-ch: white;
+}
+
+.blue {
+    --btn-b: 3px solid #0039e5;
+    --btn-bc: white;
+    --btn-c: black;
+    --btn-bch: #0039e5;
+    --btn-bh: 2px solid #0039e5;
+    --btn-ch: white;
+}
+.red {
+    --btn-b: 3px solid #e50000;
+    --btn-bc: white;
+    --btn-c: black;
+    --btn-bch: #e50000;
+    --btn-bh: 2px solid #e50000;
+    --btn-ch: white;
+}
+.purple {
+    --btn-b: 3px solid #a000e5;
+    --btn-bc: white;
+    --btn-c: black;
+    --btn-bch: #a000e5;
+    --btn-bh: 2px solid #a000e5;
+    --btn-ch: white;
+}
+.orange {
+    --btn-b: 3px solid #e57a00;
+    --btn-bc: white;
+    --btn-c: black;
+    --btn-bch: #e57a00;
+    --btn-bh: 2px solid #e57a00;
+    --btn-ch: white;
+}

@@ -9,12 +9,9 @@ import static org.example.HitChecker.checkHit;
 
 public class DataService {
 
-    private final HistoryManager historyManager;
     private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-    public DataService(HistoryManager historyManager) {
-        this.historyManager = historyManager;
-    }
+
 
     public Response processData(Request request) {
         long startTime = System.nanoTime();
@@ -33,7 +30,6 @@ public class DataService {
                 System.nanoTime()-startTime
         );
 
-        historyManager.addResult(response);
         return response;
     }
 }

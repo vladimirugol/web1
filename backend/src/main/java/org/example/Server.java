@@ -8,17 +8,21 @@ public class Server implements Runnable {
     private final RequestHandler requestHandler;
 
     public Server() {
-        HistoryManager historyManager = new HistoryManager();
-        DataService checkService = new DataService(historyManager);
-        this.requestHandler = new RequestHandler(checkService, historyManager);
+        DataService checkService = new DataService();
+        this.requestHandler = new RequestHandler(checkService);
     }
 
     @Override
     public void run() {
-        System.out.println("FastCGI сервер запущен...");
-        while (new FCGIInterface().FCGIaccept() >= 0) {
-            requestHandler.handleRequest();
+        FCGIInterface fcgi = new FCGIInterface();
+        while (true) {
+            try {
+                while (fcgi.FCGIaccept() >= 0) {
+                    requestHandler.handleRequest();
+                }
+            } catch (Exception e) {
+                System.err.println("Критическая ошибка в главном цикле FCGI: " + e.getMessage());
+            }
         }
-        System.out.println("FastCGI сервер завершил работу.");
     }
 }

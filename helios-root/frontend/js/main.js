@@ -7,18 +7,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const rCheckboxes = document.querySelectorAll('.r-checkbox');
     const errorMessage = document.getElementById('error-message');
     const resultsBody = document.getElementById('results-body');
+    const themeButton = document.getElementById("theme");
+    const themes = ['default', 'blue', 'red', 'purple', 'orange'];
+    const submitButton = document.getElementById("submit-button");
+    document.body.className = themes[0];
+
+    themeButton.addEventListener('click', function() {
+        const currentTheme = document.body.className;
+        let newTheme;
+        do {
+            const randomIndex = Math.floor(Math.random() * themes.length);
+            newTheme = themes[randomIndex];
+        } while (newTheme === currentTheme);
+        document.body.className = newTheme;
+    });
+    function getRandom(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+    submitButton.addEventListener("mousemove", function(){
+        submitButton.style.left = `${getRandom(1, 90)}%`
+        submitButton.style.top = `${getRandom(1, 90)}%`
+    })
 
     graphDrawer.init('graph-canvas'); 
     loadHistoryAndDraw(); 
     rCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            if (checkbox.checked) {
-                rCheckboxes.forEach(other => { 
-                    if (other !== checkbox) other.checked = false; 
-                });
-            }
+        checkbox.addEventListener('change', () => { 
             const currentR = getSelectedR();
-            graphDrawer.drawCanvas(currentR);
+            graphDrawer.drawCanvas(currentR.length > 0 ? currentR[0] : null);
             const history = JSON.parse(sessionStorage.getItem('resultsHistory')) || [];
             graphDrawer.drawPointsForCurrentR(history, currentR);
         });
@@ -47,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorMessage.textContent = 'Error: Please, select Y-value.';
             return false;
         }
-        if (!getSelectedR()) {
+        if (getSelectedR().length===0) {
             errorMessage.textContent = 'Error: Please, select R-value.';
             return false;
         }
@@ -56,43 +72,43 @@ document.addEventListener('DOMContentLoaded', () => {
     async function sendData() {
         const x = xInput.value.trim().replace(',', '.');
         const y = form.querySelector('input[name="y"]:checked').value;
-        const r = getSelectedR();
-
-        const formData = new URLSearchParams();
-        formData.append('x', x);
-        formData.append('y', y);
-        formData.append('r', r);
-
-        try {
-            const response = await fetch('/fcgi-bin/server.jar', {
+        const selectedR = getSelectedR();
+        const requests = [];
+        selectedR.forEach(r => {
+            const formData = new URLSearchParams();
+            formData.append('x', x);
+            formData.append('y', y);
+            formData.append('r', r);
+            const req = fetch('/fcgi-bin/server.jar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: formData.toString()
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
             });
+            
+            requests.push(req);
+        });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const data = await response.json(); 
-            let history = [];
-        
-            if (data.history && Array.isArray(data.history)) {
-                history = data.history;
-                sessionStorage.setItem('resultsHistory', JSON.stringify(history));
-            } else {
-                history = JSON.parse(sessionStorage.getItem('resultsHistory')) || [];
-            }
-            
-            updateTableFromHistory(history);
-            const currentR = getSelectedR();
-            graphDrawer.drawCanvas(currentR);
-            graphDrawer.redrawAllPoints(history);
+        try {
+            const results = await Promise.all(requests);
+
+            let oldHistory = JSON.parse(sessionStorage.getItem('resultsHistory')) || [];
+            const newHistoryEntries = results.map(result => result.history[0]); 
+            const finalHistory = oldHistory.concat(newHistoryEntries);
+            sessionStorage.setItem('resultsHistory', JSON.stringify(finalHistory));
+            updateTableFromHistory(finalHistory);      
+            const firstR = getSelectedR()[0] || null;
+            graphDrawer.drawCanvas(firstR);
+            graphDrawer.redrawAllPoints(finalHistory);
         } catch (error) {
-            console.error('Ошибка при отправке запроса:', error);
-            errorMessage.textContent = 'Connection Error.';
+            console.error('Error sending data:', error);
+            errorMessage.textContent = 'Connection Error. One or more requests failed.';
         }
     }
 
@@ -106,20 +122,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 td.textContent = item[key] !== undefined ? item[key] : '';
                 row.appendChild(td);
             });
-            resultsBody.appendChild(row);
+            resultsBody.prepend(row);
         });
     }
 
     function getSelectedR() {
-        const checked = form.querySelector('input[name="r"]:checked');
-        return checked ? parseFloat(checked.value) : null;
+        const checked = form.querySelectorAll('input[name="r"]:checked');
+        return Array.from(checked).map(checkbox => parseFloat(checkbox.value));
     }
     function loadHistoryAndDraw() {
         const history = JSON.parse(sessionStorage.getItem('resultsHistory')) || [];
         updateTableFromHistory(history);
 
         const currentR = getSelectedR();
-        graphDrawer.drawCanvas(currentR); 
+        const firstR = currentR.length > 0 ? currentR[0] : null;
+        graphDrawer.drawCanvas(firstR); 
         graphDrawer.redrawAllPoints(history); 
     }
 });

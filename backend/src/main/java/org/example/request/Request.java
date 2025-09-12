@@ -1,4 +1,6 @@
 package org.example.request;
 
-public record Request(long x, long y, long r) {
+import java.math.BigDecimal;
+
+public record Request(BigDecimal x, BigDecimal y, BigDecimal r) {
 }

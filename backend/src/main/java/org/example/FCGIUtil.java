@@ -22,4 +22,10 @@ public final class FCGIUtil {
         buffer.clear();
         return new String(requestBodyRaw, StandardCharsets.UTF_8);
     }
+    public static String getRequestMethod() {
+        if (FCGIInterface.request == null) {
+            return "";
+        }
+        return FCGIInterface.request.params.getProperty("REQUEST_METHOD");
+    }
 }

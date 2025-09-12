@@ -2,36 +2,39 @@ package org.example.request;
 
 import org.example.DataService;
 import org.example.FCGIUtil;
-import org.example.HistoryManager;
+import org.example.response.Response;
 import org.example.response.ResponseUtil;
+
+import static org.example.FCGIUtil.getRequestMethod;
+import static org.example.FCGIUtil.readRequestBody;
 
 
 public class RequestHandler {
 
     private final DataService checkService;
-    private final HistoryManager historyManager;
-    public RequestHandler(DataService checkService, HistoryManager historyManager) {
+    public RequestHandler(DataService checkService) {
         this.checkService = checkService;
-        this.historyManager = historyManager;
     }
-    public void handleRequest() {
+    public synchronized void handleRequest() {
         try {
-            String requestBody = FCGIUtil.readRequestBody();
+            if (!"POST".equalsIgnoreCase(getRequestMethod())) {
+                sendErrorResponse(405, "Method Not Allowed");
+                return;
+            }
+            String requestBody = readRequestBody();
             if (requestBody == null || requestBody.trim().isEmpty()) {
-                sendSuccessResponse();
+                sendSuccessResponse(null);
                 return;
             }
             Request params = RequestParser.parse(requestBody);
-            checkService.processData(params);
-            sendSuccessResponse();
-
+            sendSuccessResponse(checkService.processData(params));
         } catch (Exception e) {
             sendErrorResponse(400, "Bad Request: " + e.getMessage());
         }
     }
 
-    private void sendSuccessResponse() {
-        String jsonResponse = ResponseUtil.buildSuccessResponse(historyManager.getHistory());
+    private void sendSuccessResponse(Response response) {
+        String jsonResponse = ResponseUtil.buildSuccessResponse(response);
         System.out.print(jsonResponse);
     }
 

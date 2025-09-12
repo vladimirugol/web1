@@ -8,17 +8,16 @@ import java.util.Map;
 public class ResponseUtil {
     private static final Gson gson = new Gson();
 
-    public static String buildSuccessResponse(List<Response> history) {
-        Map<String, List<Response>> responseMap = Map.of("history", history);
+    public static String buildSuccessResponse(Response response) {
+        return buildSuccessResponse(response != null ? List.of(response) : List.of());
+    }
+
+    public static String buildSuccessResponse(List<Response> responses) {
+        Map<String, List<Response>> responseMap = Map.of("history", responses);
         String jsonContent = gson.toJson(responseMap);
         return buildHttpResponse(200, jsonContent);
     }
 
-    public static String buildErrorResponse(int statusCode, String errorMessage) {
-        Map<String, String> errorMap = Map.of("error", errorMessage);
-        String jsonContent = gson.toJson(errorMap);
-        return buildHttpResponse(statusCode, jsonContent);
-    }
     private static String buildHttpResponse(int statusCode, String content) {
         String statusMessage = getStatusMessage(statusCode);
         byte[] contentBytes = content.getBytes(StandardCharsets.UTF_8);
@@ -38,4 +37,8 @@ public class ResponseUtil {
             default: return "OK";
         }
     }
+    public static String buildErrorResponse(int statusCode, String errorMessage) {
+        Map<String, String> errorMap = Map.of("error", errorMessage);
+        String jsonContent = gson.toJson(errorMap);
+        return buildHttpResponse(statusCode, jsonContent); }
 }
