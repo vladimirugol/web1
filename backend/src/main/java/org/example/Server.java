@@ -15,14 +15,12 @@ public class Server implements Runnable {
     @Override
     public void run() {
         FCGIInterface fcgi = new FCGIInterface();
-        while (true) {
-            try {
-                while (fcgi.FCGIaccept() >= 0) {
-                    requestHandler.handleRequest();
-                }
-            } catch (Exception e) {
-                System.err.println("Критическая ошибка в главном цикле FCGI: " + e.getMessage());
+        try {
+            while (fcgi.FCGIaccept() >= 0) {
+                requestHandler.handleRequest();
             }
+        } catch (Exception e) {
+            System.err.println("Критическая ошибка в главном цикле FCGI: " + e.getMessage());
         }
     }
 }

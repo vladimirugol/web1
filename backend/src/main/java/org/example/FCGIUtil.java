@@ -23,7 +23,7 @@ public final class FCGIUtil {
         return new String(requestBodyRaw, StandardCharsets.UTF_8);
     }
     public static String getRequestMethod() {
-        if (FCGIInterface.request == null) {
+        if ((FCGIInterface.request == null) || (FCGIInterface.request.params == null)) {
             return "";
         }
         return FCGIInterface.request.params.getProperty("REQUEST_METHOD");
