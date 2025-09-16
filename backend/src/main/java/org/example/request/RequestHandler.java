@@ -1,7 +1,6 @@
 package org.example.request;
 
 import org.example.DataService;
-import org.example.FCGIUtil;
 import org.example.response.Response;
 import org.example.response.ResponseUtil;
 

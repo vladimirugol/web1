@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } while (newTheme === currentTheme);
         document.body.className = newTheme;
     });
-    function getRandom(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-    submitButton.addEventListener("mousemove", function(){
-        submitButton.style.left = `${getRandom(1, 90)}%`
-        submitButton.style.top = `${getRandom(1, 90)}%`
-    })
+    // function getRandom(min, max) {
+    //     return Math.random() * (max - min) + min;
+    // }
+    // submitButton.addEventListener("mousemove", function(){
+    //     submitButton.style.left = `${getRandom(1, 90)}%`
+    //     submitButton.style.top = `${getRandom(1, 90)}%`
+    // })
 
     graphDrawer.init('graph-canvas'); 
     loadHistoryAndDraw(); 
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    form.addEventListener('submit', (event) => {
+    submitButton.addEventListener('click', (event) => {
         event.preventDefault(); 
         if (validateForm()) {
             sendData(); 
