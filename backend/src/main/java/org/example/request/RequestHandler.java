@@ -25,6 +25,7 @@ public class RequestHandler {
                 sendSuccessResponse(null);
                 return;
             }
+            System.out.println("пришел запрос");
             Request params = RequestParser.parse(requestBody);
             sendSuccessResponse(checkService.processData(params));
         } catch (Exception e) {

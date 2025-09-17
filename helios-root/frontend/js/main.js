@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('x', x);
             formData.append('y', y);
             formData.append('r', r);
-            const req = fetch('/fcgi-bin/server.jar', {
+            const req = fetch('/api/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

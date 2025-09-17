@@ -15,6 +15,7 @@ public class Server implements Runnable {
     @Override
     public void run() {
         FCGIInterface fcgi = new FCGIInterface();
+        System.out.println("сервер запущен");
         try {
             while (fcgi.FCGIaccept() >= 0) {
                 requestHandler.handleRequest();
