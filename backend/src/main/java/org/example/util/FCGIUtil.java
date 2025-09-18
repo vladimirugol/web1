@@ -1,4 +1,4 @@
-package org.example;
+package org.example.util;
 
 import com.fastcgi.FCGIInterface;
 import java.io.IOException;
